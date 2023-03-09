@@ -1,26 +1,50 @@
+import { useState, useEffect } from "react"
 import styled from "styled-components"
+import { Link, useParams } from "react-router-dom";
+import axios from "axios"
+//link que me leva pra página que eu quero. Só passar a rota: <Link to="/rota">Texto linkado<Link/>
 
 export default function HomePage() {
+    const [movies, setMovie] = useState([])
+    const {idSessao} = useParams()
+
+    useEffect(() => {
+        const url = "https://mock-api.driven.com.br/api/v8/cineflex/movies"
+        const promise = axios.get(url)
+
+        promise.then(response => {setMovie(response.data)})
+    },[])
+
+    console.log(movies)
+
+
+
     return (
         <PageContainer>
             Selecione o filme
 
             <ListContainer>
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
+                {/* <MovieContainer>
+                    <Link to="/sessoes/:idFilme">
+                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/></Link>
+                </MovieContainer> */}
+                {/* {movies.map((movie) => {
+                    <MovieContainer>
+                        <Link to={movies.map((m) => {`/sessoes/${m.data.id}`})}> 
+                                {movies.map((mov, index) => {
+                                <img src={mov.data.posterURL} alt={mov.data.title}/>
+                                })}
+                        </Link>
+                    </MovieContainer>)} */}
+                {movies.map((movie) => {
+                        return (
+                        <MovieContainer key={movie.id}>
+                            <Link to={`/sessoes/:${movie.id}`}>
+                                <img src={movie.posterURL} alt={movie.title}/>
+                            </Link>
+                        </MovieContainer>
+                        )
+                })}
             </ListContainer>
 
         </PageContainer>
