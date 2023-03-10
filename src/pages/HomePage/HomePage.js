@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react"
 import styled from "styled-components"
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios"
 //link que me leva pra página que eu quero. Só passar a rota: <Link to="/rota">Texto linkado<Link/>
 
 export default function HomePage() {
-    const [movies, setMovie] = useState([])
-    const {idSessao} = useParams()
+    const [movies, setMovies] = useState([])
 
     useEffect(() => {
         const url = "https://mock-api.driven.com.br/api/v8/cineflex/movies"
         const promise = axios.get(url)
 
-        promise.then(response => {setMovie(response.data)})
-    },[])
+        promise.then(response => {setMovies(response.data)})
+    }, [])
 
     console.log(movies)
 
@@ -24,10 +23,6 @@ export default function HomePage() {
             Selecione o filme
 
             <ListContainer>
-                {/* <MovieContainer>
-                    <Link to="/sessoes/:idFilme">
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/></Link>
-                </MovieContainer> */}
                 {movies.map((movie) => {
                         return (
                         <MovieContainer key={movie.id}>

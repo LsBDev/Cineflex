@@ -1,18 +1,44 @@
 import styled from "styled-components"
+import { Link, useParams } from "react-router-dom";
+import axios from "axios"
+import { useEffect, useState } from "react";
 
 export default function SessionsPage() {
+    const [film, setFilm] = useState()
+    const {idFilme} = useParams()
+
+    useEffect(() => {
+        const id = idFilme.replace(':' , '')
+        const url = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${id}/showtimes`
+        const promise = axios.get(url)
+
+        promise.then((res) => setFilm(res.data))
+        promise.catch((err) => alert(err.response))
+        
+    }, [idFilme])
+console.log(film)
+
+    if(film === undefined) {
+        return
+    }
 
     return (
         <PageContainer>
             Selecione o horário
             <div>
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer>
+                {film.days.map((filme) => {
+                    return (
+                    <SessionContainer key={filme.id}>
+                         <p>{filme.weekday} - {filme.date}</p>
+                         <ButtonsContainer>
+                            {filme.showtimes.map((h) => (<Link to={`/assentos/:${idSessao}`}><button>{h.name}</button></Link>))}
+                         </ButtonsContainer>
+                    </SessionContainer>
+                    )
+
+
+                })}
+               
 
                 <SessionContainer>
                     Sexta - 03/03/2023

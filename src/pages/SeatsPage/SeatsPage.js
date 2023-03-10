@@ -1,6 +1,10 @@
+import { useState } from "react"
+import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
 
 export default function SeatsPage() {
+    const {idSessao} = useParams()
+    const [seats,setSeats] = useState()
 
     return (
         <PageContainer>
