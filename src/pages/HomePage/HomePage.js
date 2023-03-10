@@ -28,14 +28,6 @@ export default function HomePage() {
                     <Link to="/sessoes/:idFilme">
                     <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/></Link>
                 </MovieContainer> */}
-                {/* {movies.map((movie) => {
-                    <MovieContainer>
-                        <Link to={movies.map((m) => {`/sessoes/${m.data.id}`})}> 
-                                {movies.map((mov, index) => {
-                                <img src={mov.data.posterURL} alt={mov.data.title}/>
-                                })}
-                        </Link>
-                    </MovieContainer>)} */}
                 {movies.map((movie) => {
                         return (
                         <MovieContainer key={movie.id}>
