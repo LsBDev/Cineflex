@@ -2,12 +2,15 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
+import Button from "./Button"
 
 export default function SeatsPage() {
     const [seats, setSeats] = useState()
     const {idSessao} = useParams()
+    const [selected, setSelected] = useState([])
 
-    console.log(seats)
+    // console.log(seats)
+    console.log(selected)
 
     useEffect(() => {
         const id = idSessao.replace(':' , '')
@@ -18,10 +21,16 @@ export default function SeatsPage() {
         promise.catch((err) => console.log(err.response))
     }, [idSessao])
 
+    function selecionar(seat) {
+        const selec = [...selected, seat]
+        console.log(selec)
+        setSelected(selec)
+       
+    }
+
     if(seats === undefined) {
         return
     }
-
 
     return (
         <PageContainer>
@@ -29,26 +38,18 @@ export default function SeatsPage() {
             <SeatsContainer>           
                 {seats.seats.map((seat) => {
                     return (
-                        <SeatItem>{seat.name}</SeatItem>
+                        <SeatItem onClick={() => selecionar(seat.id)} selected={selected} seat={seat}>{seat.name}</SeatItem>
                     )
                 } )}
             </SeatsContainer>
 
 
-            <CaptionContainer>
-                <CaptionItem>
-                    <CaptionCircle />
-                    Selecionado
-                </CaptionItem>
-                <CaptionItem>
-                    <CaptionCircle />
-                    Disponível
-                </CaptionItem>
-                <CaptionItem>
-                    <CaptionCircle />
-                    Indisponível
-                </CaptionItem>
-            </CaptionContainer>
+            <Container>
+                <Button text='Selecionado'/>
+                <Button text='Disponível'/>
+                <Button text='Indisponível'/>
+            </Container>
+            
 
             <FormContainer>
                 Nome do Comprador:
@@ -62,18 +63,22 @@ export default function SeatsPage() {
 
             <FooterContainer>
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={seats.movie.posterURL} alt={seats.movie.title} />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                    <p>Sexta - 14h00</p>
+                    <p>{seats.movie.title}</p>
+                    <p>{seats.day.weekday} - {seats.name}</p>
                 </div>
             </FooterContainer>
 
         </PageContainer>
     )
+    
 }
 
+const Container = styled.div `
+  display: flex;
+`
 const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -109,33 +114,9 @@ const FormContainer = styled.div`
         width: calc(100vw - 60px);
     }
 `
-const CaptionContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 300px;
-    justify-content: space-between;
-    margin: 20px;
-`
-const CaptionCircle = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 3px;
-`
-const CaptionItem = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 12px;
-`
 const SeatItem = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: 1px solid ${(props) => props.seat.isAvailable ? (props.selected.includes(props.seat.id) ? "#0E7D71" : "#7B8B99") : "#F7C52B"};
+    background-color: ${(props) => props.seat.isAvailable ? (props.selected.includes(props.seat.id) ? "#1AAE9E" : "#C3CFD9") : "#FBE192"};
     height: 25px;
     width: 25px;
     border-radius: 25px;

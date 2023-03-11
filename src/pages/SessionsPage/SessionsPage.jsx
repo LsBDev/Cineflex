@@ -20,47 +20,35 @@ export default function SessionsPage() {
     if(film === undefined) {
         return
     }
+    
+    // console.log(film)
 
     return (
         <PageContainer>
             Selecione o horário
+
             <div>
                 {film.days.map((filme) => {
                     return (
                     <SessionContainer key={filme.id}>
                          <p>{filme.weekday} - {filme.date}</p>
                          <ButtonsContainer>
-                            {filme.showtimes.map((h) => (<Link to={`/assentos/:${h.id}`}><button>{h.name}</button></Link>))}
+                            {filme.showtimes.map((h) => (
+                            <Link to={`/assentos/:${h.id}`}>
+                                <button>{h.name}</button>
+                            </Link>))}
                          </ButtonsContainer>
                     </SessionContainer>
                     )
-
-
-                })}               
-
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer>
-
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer>
+                })}
             </div>
 
             <FooterContainer>
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={film.posterURL} alt={film.title} />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
+                    <p>{film.title}</p>
                 </div>
             </FooterContainer>
 

@@ -15,8 +15,6 @@ export default function HomePage() {
 
     console.log(movies)
 
-
-
     return (
         <PageContainer>
             Selecione o filme
