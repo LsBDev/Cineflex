@@ -1,22 +1,39 @@
-import { useState } from "react"
+import axios from "axios"
+import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
 
 export default function SeatsPage() {
+    const [seats, setSeats] = useState()
     const {idSessao} = useParams()
-    const [seats,setSeats] = useState()
+
+    console.log(seats)
+
+    useEffect(() => {
+        const id = idSessao.replace(':' , '')
+        const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${id}/seats`
+        const promise = axios.get(url)
+
+        promise.then((res) => setSeats(res.data))
+        promise.catch((err) => console.log(err.response))
+    }, [idSessao])
+
+    if(seats === undefined) {
+        return
+    }
+
 
     return (
         <PageContainer>
-            Selecione o(s) assento(s)
-
-            <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
+            Selecione o(s) assento(s) 
+            <SeatsContainer>           
+                {seats.seats.map((seat) => {
+                    return (
+                        <SeatItem>{seat.name}</SeatItem>
+                    )
+                } )}
             </SeatsContainer>
+
 
             <CaptionContainer>
                 <CaptionItem>
@@ -70,8 +87,8 @@ const PageContainer = styled.div`
     padding-top: 70px;
 `
 const SeatsContainer = styled.div`
-    width: 330px;
     display: flex;
+    width: 330px;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;

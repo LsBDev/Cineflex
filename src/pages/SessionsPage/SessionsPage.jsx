@@ -16,7 +16,6 @@ export default function SessionsPage() {
         promise.catch((err) => alert(err.response))
         
     }, [idFilme])
-console.log(film)
 
     if(film === undefined) {
         return
@@ -31,14 +30,13 @@ console.log(film)
                     <SessionContainer key={filme.id}>
                          <p>{filme.weekday} - {filme.date}</p>
                          <ButtonsContainer>
-                            {filme.showtimes.map((h) => (<Link to={`/assentos/:${idSessao}`}><button>{h.name}</button></Link>))}
+                            {filme.showtimes.map((h) => (<Link to={`/assentos/:${h.id}`}><button>{h.name}</button></Link>))}
                          </ButtonsContainer>
                     </SessionContainer>
                     )
 
 
-                })}
-               
+                })}               
 
                 <SessionContainer>
                     Sexta - 03/03/2023

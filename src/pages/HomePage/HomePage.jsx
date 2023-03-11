@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom";
 import axios from "axios"
-//link que me leva pra página que eu quero. Só passar a rota: <Link to="/rota">Texto linkado<Link/>
 
 export default function HomePage() {
     const [movies, setMovies] = useState([])
