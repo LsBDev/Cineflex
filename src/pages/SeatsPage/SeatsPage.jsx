@@ -1,16 +1,16 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import Button from "./Button"
+import Label from "./Label"
 
-export default function SeatsPage() {
-    const [seats, setSeats] = useState()
+export default function SeatsPage({seats, setSeats, setInfo}) {
+    
     const {idSessao} = useParams()
     const [selected, setSelected] = useState([])
-
-    // console.log(seats)
-    console.log(selected)
+    const [name, setName] = useState("")
+    const [cpf, setCpf] = useState("")
+    const navigate = useNavigate()
 
     useEffect(() => {
         const id = idSessao.replace(':' , '')
@@ -19,14 +19,45 @@ export default function SeatsPage() {
 
         promise.then((res) => setSeats(res.data))
         promise.catch((err) => console.log(err.response))
-    }, [idSessao])
+    }, [idSessao, setSeats])
 
-    function selecionar(seat) {
-        const selec = [...selected, seat]
-        console.log(selec)
-        setSelected(selec)
-       
+
+    function selecionar(seat)  {
+        const arr = [...selected]
+        const arrIds = arr.map(item => item.id)
+        if(arrIds.includes(seat.id)) {
+            setSelected(arr.filter((item) => item.id !== seat.id) )
+        } else {
+            setSelected([...selected, seat])
+        }
     }
+
+    function reservar(seats, name, cpf) {
+        const arrayIds = seats.map((item) => item.id)
+        const object = {ids: arrayIds, name: name, cpf: cpf}
+        const url = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many"
+        const promise = axios.post(url, object)
+        promise.then(() => {
+            setInfo({name: name, cpf: cpf, seats: seats.map((item) => item.name)})
+            navigate("/sucesso")})
+    }
+
+    // function selecionar(seat) {
+    //     const arr = []
+    //     let lightSwitch = false
+    //     for(let i = 0; i < selected.length; i++) {
+    //         if (selected[i] !== seat) {
+    //             arr.push(selected[i])
+    //         } else {
+    //             lightSwitch = true
+    //         }
+    //     }
+    //     if(lightSwitch === false) {
+    //         setSelected([...arr, seat])            
+    //     } else {
+    //         setSelected([...arr])
+    //     }
+    // }
 
     if(seats === undefined) {
         return
@@ -36,33 +67,31 @@ export default function SeatsPage() {
         <PageContainer>
             Selecione o(s) assento(s) 
             <SeatsContainer>           
-                {seats.seats.map((seat) => {
+                {seats.seats.map((seat, index) => {
                     return (
-                        <SeatItem onClick={() => selecionar(seat.id)} selected={selected} seat={seat}>{seat.name}</SeatItem>
+                        <SeatItem data-test="seat" key={index} onClick={() => selecionar(seat)} selected={selected.map(item => item.id)} seat={seat}>{seat.name}</SeatItem>
                     )
                 } )}
             </SeatsContainer>
 
 
             <Container>
-                <Button text='Selecionado'/>
-                <Button text='Disponível'/>
-                <Button text='Indisponível'/>
+                <Label text='Selecionado'/>
+                <Label text='Disponível'/>
+                <Label text='Indisponível'/>
             </Container>
             
 
             <FormContainer>
                 Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
-
+                <input data-test="client-name" value={name} onChange={e => setName(e.target.value)} placeholder="Digite seu nome..." required/>
                 CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
-
-                <button>Reservar Assento(s)</button>
+                <input data-test="client-cpf" value={cpf} onChange={e => setCpf(e.target.value)} placeholder="Digite seu CPF..." required/>
+                <button data-test="book-seat-btn" onClick={() => reservar([...selected], name, cpf)}>Reservar Assento(s)</button>
             </FormContainer>
 
             <FooterContainer>
-                <div>
+                <div data-test="footer">
                     <img src={seats.movie.posterURL} alt={seats.movie.title} />
                 </div>
                 <div>
@@ -75,7 +104,6 @@ export default function SeatsPage() {
     )
     
 }
-
 const Container = styled.div `
   display: flex;
 `

@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export default function Button({text}) {
+export default function Label({text}) {
 
   return (
       <CaptionContainer>
