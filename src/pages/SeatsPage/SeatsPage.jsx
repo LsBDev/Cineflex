@@ -13,8 +13,8 @@ export default function SeatsPage({seats, setSeats, setInfo}) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        const id = idSessao.replace(':' , '')
-        const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${id}/seats`
+        // const id = idSessao.replace(':' , '')
+        const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
         const promise = axios.get(url)
 
         promise.then((res) => setSeats(res.data))
