@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom";
 import axios from "axios"
-//link que me leva pra página que eu quero. Só passar a rota: <Link to="/rota">Texto linkado<Link/>
 
 export default function HomePage() {
     const [movies, setMovies] = useState([])
@@ -12,10 +11,7 @@ export default function HomePage() {
         const promise = axios.get(url)
 
         promise.then(response => {setMovies(response.data)})
-    }, [])
-
-    console.log(movies)
-
+    }, [    ])
 
 
     return (
@@ -25,7 +21,7 @@ export default function HomePage() {
             <ListContainer>
                 {movies.map((movie) => {
                         return (
-                        <MovieContainer key={movie.id}>
+                        <MovieContainer data-test="movie" key={movie.id}>
                             <Link to={`/sessoes/:${movie.id}`}>
                                 <img src={movie.posterURL} alt={movie.title}/>
                             </Link>
