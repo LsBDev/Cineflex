@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 
 export default function SuccessPage({seats, info}) {
     const navigate = useNavigate()
+    console.log(seats)
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
@@ -11,7 +12,7 @@ export default function SuccessPage({seats, info}) {
             <TextContainer data-test="movie-info">
                 <strong><p>Filme e sessão</p></strong>
                 <p>{seats.movie.title}</p>
-                <p>{seats.day.weekday} - {seats.name}</p>
+                <p>{seats.day.date} - {seats.name}</p>
             </TextContainer>
 
             <TextContainer data-test="seats-info">
@@ -25,8 +26,8 @@ export default function SuccessPage({seats, info}) {
                 <p>CPF: {info.cpf}</p>
             </TextContainer>
 
-            <button data-test="go-to-home-btn" onClick={() => navigate("/")}>Voltar para Home</button>
-            {/* <Link to="/"> <button data-test="go-to-home-btn">Voltar para Home</button></Link> */}
+            <button data-test="go-home-btn" onClick={() => navigate("/")}>Voltar para Home</button>
+            {/* <Link to="/"> <button data-test="go-home-btn">Voltar para Home</button></Link> */}
         </PageContainer>
     )
 }
