@@ -26,6 +26,7 @@ export default function SuccessPage({seats, info}) {
             </TextContainer>
 
             <button data-test="go-to-home-btn" onClick={() => navigate("/")}>Voltar para Home</button>
+            {/* <Link to="/"> <button data-test="go-to-home-btn">Voltar para Home</button></Link> */}
         </PageContainer>
     )
 }
