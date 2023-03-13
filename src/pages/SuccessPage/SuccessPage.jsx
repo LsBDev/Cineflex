@@ -23,7 +23,7 @@ export default function SuccessPage({seats, info}) {
                 <p>CPF: {info.cpf}</p>
             </TextContainer>
 
-            <Link data-test="go-to-home-btn" to="/" ><button>Voltar para Home</button></Link>
+            <Link to="/" ><button data-test="go-to-home-btn">Voltar para Home</button></Link>
         </PageContainer>
     )
 }
