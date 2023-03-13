@@ -25,9 +25,12 @@ export default function SeatsPage({seats, setSeats, setInfo}) {
     function selecionar(seat)  {
         const arr = [...selected]
         const arrIds = arr.map(item => item.id)
+        if(seat.isAvailable === false) {
+            alert("Esse assento não está disponível")
+        }
         if(arrIds.includes(seat.id)) {
             setSelected(arr.filter((item) => item.id !== seat.id) )
-        } else {
+        } else if(seat.isAvailable === true) {
             setSelected([...selected, seat])
         }
     }
@@ -90,8 +93,8 @@ export default function SeatsPage({seats, setSeats, setInfo}) {
                 <button data-test="book-seat-btn" onClick={() => reservar([...selected], name, cpf)}>Reservar Assento(s)</button>
             </FormContainer>
 
-            <FooterContainer>
-                <div data-test="footer">
+            <FooterContainer data-test="footer">
+                <div>
                     <img src={seats.movie.posterURL} alt={seats.movie.title} />
                 </div>
                 <div>
