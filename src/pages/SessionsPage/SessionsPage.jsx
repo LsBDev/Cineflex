@@ -43,8 +43,8 @@ export default function SessionsPage() {
                 })}
             </div>
 
-            <FooterContainer>
-                <div data-test="footer">
+            <FooterContainer data-test="footer">
+                <div>
                     <img src={film.posterURL} alt={film.title} />
                 </div>
                 <div>
