@@ -1,7 +1,9 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+// import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export default function SuccessPage({seats, info}) {
+    const navigate = useNavigate()
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
@@ -23,7 +25,7 @@ export default function SuccessPage({seats, info}) {
                 <p>CPF: {info.cpf}</p>
             </TextContainer>
 
-            <Link to="/" ><button data-test="go-to-home-btn">Voltar para Home</button></Link>
+            <button data-test="go-to-home-btn" onClick={() => navigate("/")}>Voltar para Home</button>
         </PageContainer>
     )
 }
