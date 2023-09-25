@@ -6,10 +6,10 @@ O Cineflex é um webapp que permite aos usuários reservar ingressos de cinema d
 
 
 <p align="center">
-  <img width="23%" src="./src/assets/login.png" />
-  <img width="23%" src="./src/assets/transacões 1.png" />
-  <img width="23%" src="./src/assets/inserindo entrada.png" />
-  <img width="23%" src="./src/assets/transacões 2.png" />
+  <img width="23%" src="./src/assets/Cineflex1.jpg" />
+  <img width="23%" src="./src/assets/Cineflex2.jpg" />
+  <img width="23%" src="./src/assets/Cineflex3.jpg" />
+  <img width="23%" src="./src/assets/Cineflex4.jpg" />
 </p>
 
 ## Funcionalidades Principais
