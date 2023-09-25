@@ -4,7 +4,7 @@ https://github.com/LsBDev/Cineflex/blob/main/LICENSE
 
 O Cineflex é um webapp que permite aos usuários reservar ingressos de cinema de forma simples e conveniente. Com o Cineflex, você pode escolher o filme que deseja assistir, selecionar o dia e a sessão, escolher seus assentos preferidos e inserir seus dados para concluir a reserva. Agora, você pode reservar suas sessões de  filmes mais recentes sem sair de casa!
 
-
+<a href="https://projeto10-cineflex-mu-five.vercel.app/"> Link para a Aplicação </a>
 <p align="center">
   <img width="23%" src="./src/assets/Cineflex1.jpg" />
   <img width="23%" src="./src/assets/Cineflex2.jpg" />
